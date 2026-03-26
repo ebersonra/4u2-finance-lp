@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4U2 Finance — Finanças em família, do jeito de vocês</title>
+  <meta name="description" content="O app de finanças pessoais para casais e famílias. Organize, planeje e realize juntos." />
+  <meta property="og:title" content="4U2 Finance" />
+  <meta property="og:description" content="Finanças em família, do jeito de vocês." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0A0C10;
+      --bg2:       #0F1117;
+      --bg3:       #151820;
+      --border:    rgba(255,255,255,0.07);
+      --green:     #6EE7B7;
+      --green-dim: #1D9E75;
+      --pink:      #F9A8D4;
+      --pink-dim:  #D4537E;
+      --white:     #F4F6F2;
+      --muted:     rgba(244,246,242,0.45);
+      --serif:     'Cormorant Garamond', Georgia, serif;
+      --sans:      'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Noise overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2rem;
+      background: rgba(10,12,16,0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      color: var(--white);
+    }
+
+    .nav-logo span:first-child { color: var(--green); }
+    .nav-logo span:last-child  { color: var(--pink); }
+
+    nav a.cta-nav {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--bg);
+      background: var(--green);
+      padding: 0.5rem 1.25rem;
+      border-radius: 100px;
+      transition: opacity 0.2s;
+    }
+    nav a.cta-nav:hover { opacity: 0.85; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 7rem 1.5rem 4rem;
+      overflow: hidden;
+    }
+
+    /* Radial glow */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(ellipse, rgba(110,231,183,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green);
+      border: 1px solid rgba(110,231,183,0.25);
+      border-radius: 100px;
+      padding: 0.35rem 1rem;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      max-width: 860px;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--green);
+    }
+
+    .hero h1 .accent {
+      color: var(--pink);
+    }
+
+    .hero-sub {
+      margin-top: 1.5rem;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.7;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    /* ── LOGO mark ── */
+    .hero-mark {
+      font-family: var(--serif);
+      font-size: clamp(5rem, 15vw, 10rem);
+      font-weight: 700;
+      line-height: 1;
+      margin: 2.5rem 0;
+      animation: fadeUp 0.6s 0.15s ease both;
+      position: relative;
+      display: inline-block;
+    }
+    .hero-mark .dollar { color: var(--green); }
+    .hero-mark .two    { color: var(--pink); }
+
+    /* heart hint */
+    .hero-mark::after {
+      content: '♥';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.4);
+      font-size: 0.4em;
+      color: rgba(249,168,212,0.3);
+      pointer-events: none;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--green);
+      color: var(--bg);
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      padding: 0.85rem 2rem;
+      border-radius: 100px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary:hover { background: #86EFAC; transform: translateY(-1px); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: var(--white);
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      font-weight: 400;
+      padding: 0.85rem 1.75rem;
+      border-radius: 100px;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.04); }
+
+    /* ── SCROLL HINT ── */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      animation: fadeUp 1s 0.8s ease both;
+    }
+
+    .scroll-hint::after {
+      content: '';
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--green-dim), transparent);
+      animation: scrollLine 1.5s ease infinite;
+    }
+
+    @keyframes scrollLine {
+      0% { transform: scaleY(0); transform-origin: top; }
+      50% { transform: scaleY(1); transform-origin: top; }
+      51% { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* ── FEATURES ── */
+    .section {
+      position: relative;
+      padding: 6rem 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      max-width: 640px;
+    }
+
+    .section-title em { font-style: italic; color: var(--green); }
+
+    /* Features grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1px;
+      margin-top: 4rem;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .feature-card {
+      background: var(--bg2);
+      padding: 2.5rem;
+      transition: background 0.3s;
+      position: relative;
+    }
+
+    .feature-card:hover { background: var(--bg3); }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .feature-icon.green { background: rgba(110,231,183,0.1); }
+    .feature-icon.pink  { background: rgba(249,168,212,0.1); }
+
+    .feature-card h3 {
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.01em;
+    }
+
+    .feature-card p {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── MOCK APP SCREEN ── */
+    .app-preview {
+      padding: 6rem 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .app-preview { grid-template-columns: 1fr; gap: 2.5rem; }
+      .app-preview-visual { order: -1; }
+    }
+
+    .app-preview-text .section-label { margin-bottom: 1rem; }
+    .app-preview-text h2 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      margin-bottom: 1.25rem;
+    }
+    .app-preview-text h2 em { font-style: italic; color: var(--pink); }
+
+    .app-preview-text p {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+
+    /* Fake phone mockup */
+    .phone-mockup {
+      position: relative;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+
+    .phone-shell {
+      background: var(--bg3);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 36px;
+      padding: 1.5rem 1rem;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.05),
+        0 40px 80px rgba(0,0,0,0.6),
+        inset 0 1px 0 rgba(255,255,255,0.07);
+    }
+
+    /* Dynamic island */
+    .phone-island {
+      width: 80px; height: 22px;
+      background: #000;
+      border-radius: 100px;
+      margin: 0 auto 1rem;
+    }
+
+    .phone-screen {
+      background: var(--bg2);
+      border-radius: 24px;
+      padding: 1.25rem;
+      min-height: 420px;
+    }
+
+    .app-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .app-header-name {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    .app-header-name span:first-child { color: var(--green); }
+    .app-header-name span:last-child  { color: var(--pink); }
+
+    .app-avatar-row {
+      display: flex;
+      gap: -4px;
+    }
+
+    .avatar {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      border: 2px solid var(--bg2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      font-weight: 600;
+    }
+    .avatar.g { background: var(--green-dim); color: #fff; margin-left: -6px; }
+    .avatar.p { background: var(--pink-dim); color: #fff; }
+
+    .balance-card {
+      background: linear-gradient(135deg, rgba(110,231,183,0.12), rgba(249,168,212,0.06));
+      border: 1px solid rgba(110,231,183,0.15);
+      border-radius: 16px;
+      padding: 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    .balance-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .balance-value {
+      font-family: var(--serif);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: -0.03em;
+    }
+
+    .balance-sub {
+      font-size: 0.65rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    .mini-cats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .mini-cat {
+      background: var(--bg3);
+      border-radius: 10px;
+      padding: 0.6rem 0.75rem;
+      border: 1px solid var(--border);
+    }
+
+    .mini-cat-label {
+      font-size: 0.6rem;
+      color: var(--muted);
+      margin-bottom: 0.15rem;
+    }
+
+    .mini-cat-value {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .mini-cat-bar {
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      margin-top: 0.4rem;
+      overflow: hidden;
+    }
+
+    .mini-cat-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: var(--green);
+    }
+
+    .tx-list { display: flex; flex-direction: column; gap: 0.5rem; }
+
+    .tx-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tx-item:last-child { border-bottom: none; }
+
+    .tx-left { display: flex; align-items: center; gap: 0.5rem; }
+
+    .tx-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+    }
+
+    .tx-name { font-size: 0.7rem; font-weight: 400; }
+    .tx-cat  { font-size: 0.6rem; color: var(--muted); }
+
+    .tx-amount {
+      font-family: var(--serif);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .tx-amount.neg { color: var(--pink); }
+    .tx-amount.pos { color: var(--green); }
+
+    /* ── SOCIAL PROOF ── */
+    .social-strip {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin: 0 auto;
+    }
+
+    .social-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--muted);
+    }
+
+    .social-item strong {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    /* ── HOW IT WORKS ── */
+    .steps {
+      padding: 6rem 1.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .steps-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+      text-align: left;
+    }
+
+    .step {
+      position: relative;
+      padding-left: 1rem;
+      border-left: 1px solid var(--border);
+    }
+
+    .step-num {
+      font-family: var(--serif);
+      font-size: 3rem;
+      font-weight: 700;
+      color: rgba(110,231,183,0.15);
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+
+    .step h3 {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .step p {
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── LEAD CAPTURE ── */
+    .capture {
+      padding: 5rem 1.5rem 7rem;
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .capture h2 {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .capture h2 em { font-style: italic; color: var(--green); }
+
+    .capture p {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+    }
+
+    .capture-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .capture-form input {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.9rem 1.5rem;
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--white);
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    .capture-form input::placeholder { color: var(--muted); }
+    .capture-form input:focus { border-color: rgba(110,231,183,0.4); }
+
+    .capture-form button {
+      background: var(--green);
+      color: var(--bg);
+      border: none;
+      border-radius: 100px;
+      padding: 0.9rem 2rem;
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.02em;
+    }
+
+    .capture-form button:hover { background: #86EFAC; transform: translateY(-1px); }
+
+    .capture-disclaimer {
+      margin-top: 1rem;
+      font-size: 0.75rem;
+      color: rgba(244,246,242,0.3);
+    }
+
+    .success-msg {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      color: var(--green);
+      margin-top: 1rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--white);
+    }
+    .footer-logo span:first-child { color: var(--green); }
+    .footer-logo span:last-child  { color: var(--pink); }
+
+    footer p {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--muted);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.25rem; }
+      .hero h1 { font-size: 2.8rem; }
+      .hero-mark { font-size: 6rem; }
+      .social-strip { gap: 1.25rem; }
+      .steps-list { grid-template-columns: 1fr; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span>$</span><span>2</span> Finance
+  </a>
+  <a href="#early-access" class="cta-nav">Acesso antecipado</a>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <span class="hero-badge">Em breve · iOS &amp; Android</span>
+
+  <div class="hero-mark">
+    <span class="dollar">$</span><span class="two">2</span>
+  </div>
+
+  <h1>Finanças em família,<br><em>do jeito</em> de <span class="accent">vocês dois</span></h1>
+
+  <p class="hero-sub">
+    Um app para casais e famílias organizarem o dinheiro juntos —
+    sem planilha, sem briga, com metas que fazem sentido para vocês.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#early-access" class="btn-primary">
+      Quero acesso antecipado
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <a href="#como-funciona" class="btn-ghost">Como funciona</a>
+  </div>
+
+  <div class="scroll-hint">scroll</div>
+</section>
+
+<!-- ── SOCIAL STRIP ── -->
+<div class="social-strip">
+  <div class="social-item">
+    <strong>100%</strong> offline-first
+  </div>
+  <div class="social-item">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1l1.8 3.6L14 5.4l-3 2.9.7 4.1L8 10.4l-3.7 2 .7-4.1-3-2.9 4.2-.8z" fill="#6EE7B7"/></svg>
+    <strong>Open Finance</strong> integrado
+  </div>
+  <div class="social-item">
+    <strong>iOS</strong> &amp; <strong>Android</strong>
+  </div>
+  <div class="social-item">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="3" stroke="#6EE7B7" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="#6EE7B7" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <strong>LGPD</strong> compliant
+  </div>
+</div>
+
+<!-- ── APP PREVIEW ── -->
+<section class="app-preview">
+  <div class="app-preview-text reveal">
+    <div class="section-label">O app</div>
+    <h2>Tudo que vocês precisam, <em>numa tela só</em></h2>
+    <p>
+      Veja o saldo consolidado do casal, os gastos por categoria,
+      as metas que vocês estão construindo juntos — e os boletos
+      que vencem essa semana, tudo puxado automaticamente pelo Open Finance.
+    </p>
+    <a href="#early-access" class="btn-primary" style="display: inline-flex;">
+      Garantir meu acesso
+    </a>
+  </div>
+
+  <div class="app-preview-visual reveal">
+    <div class="phone-mockup">
+      <div class="phone-shell">
+        <div class="phone-island"></div>
+        <div class="phone-screen">
+
+          <div class="app-header">
+            <div class="app-header-name">
+              <span>$</span><span>2</span>
+            </div>
+            <div class="app-avatar-row">
+              <div class="avatar p">EB</div>
+              <div class="avatar g">AN</div>
+            </div>
+          </div>
+
+          <div class="balance-card">
+            <div class="balance-label">Saldo familiar</div>
+            <div class="balance-value">R$ 12.480</div>
+            <div class="balance-sub">Atualizado agora · 2 contas</div>
+          </div>
+
+          <div class="mini-cats">
+            <div class="mini-cat">
+              <div class="mini-cat-label">Alimentação</div>
+              <div class="mini-cat-value" style="color: var(--pink)">R$ 840</div>
+              <div class="mini-cat-bar">
+                <div class="mini-cat-bar-fill" style="width: 68%; background: var(--pink-dim)"></div>
+              </div>
+            </div>
+            <div class="mini-cat">
+              <div class="mini-cat-label">Moradia</div>
+              <div class="mini-cat-value" style="color: var(--green)">R$ 2.100</div>
+              <div class="mini-cat-bar">
+                <div class="mini-cat-bar-fill" style="width: 90%"></div>
+              </div>
+            </div>
+            <div class="mini-cat">
+              <div class="mini-cat-label">Lazer</div>
+              <div class="mini-cat-value" style="color: var(--green)">R$ 320</div>
+              <div class="mini-cat-bar">
+                <div class="mini-cat-bar-fill" style="width: 32%"></div>
+              </div>
+            </div>
+            <div class="mini-cat">
+              <div class="mini-cat-label">Meta viagem</div>
+              <div class="mini-cat-value" style="color: var(--pink)">64%</div>
+              <div class="mini-cat-bar">
+                <div class="mini-cat-bar-fill" style="width: 64%; background: var(--pink-dim)"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tx-list">
+            <div class="tx-item">
+              <div class="tx-left">
+                <div class="tx-dot" style="background: var(--pink)"></div>
+                <div>
+                  <div class="tx-name">iFood</div>
+                  <div class="tx-cat">Alimentação · EB</div>
+                </div>
+              </div>
+              <div class="tx-amount neg">- R$ 68</div>
+            </div>
+            <div class="tx-item">
+              <div class="tx-left">
+                <div class="tx-dot" style="background: var(--green)"></div>
+                <div>
+                  <div class="tx-name">Salário</div>
+                  <div class="tx-cat">Receita · AN</div>
+                </div>
+              </div>
+              <div class="tx-amount pos">+ R$ 4.800</div>
+            </div>
+            <div class="tx-item">
+              <div class="tx-left">
+                <div class="tx-dot" style="background: var(--muted)"></div>
+                <div>
+                  <div class="tx-name">Uber</div>
+                  <div class="tx-cat">Transporte · EB</div>
+                </div>
+              </div>
+              <div class="tx-amount neg">- R$ 24</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURES ── -->
+<section class="section">
+  <div class="section-label reveal">Funcionalidades</div>
+  <h2 class="section-title reveal">Feito para quem <em>vive junto</em></h2>
+
+  <div class="features-grid reveal">
+    <div class="feature-card">
+      <div class="feature-icon green">💳</div>
+      <h3>Open Finance</h3>
+      <p>Conecte as contas bancárias de vocês dois. Extratos, saldos e boletos atualizados automaticamente — sem digitar nada.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon pink">🎯</div>
+      <h3>Metas do casal</h3>
+      <p>Viagem, carro, reforma. Criem metas juntos, acompanhem o progresso e celebrem cada conquista no app.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon green">📊</div>
+      <h3>Orçamento por categoria</h3>
+      <p>Defina limites para cada categoria do mês. O app avisa quando está chegando perto — antes de estourar.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon pink">💬</div>
+      <h3>Lançamento pelo WhatsApp</h3>
+      <p>Mande "gastei 45 no uber" para o bot e pronto — o lançamento já entra no app. Sem abrir nada, onde estiver.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon green">✈️</div>
+      <h3>100% offline</h3>
+      <p>Sem internet? O app funciona igual. Tudo fica salvo no dispositivo e sincroniza quando a conexão voltar.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon pink">🔒</div>
+      <h3>Privacidade total</h3>
+      <p>Seus dados nunca são vendidos. Conformidade com LGPD, criptografia ponta a ponta e consentimento explícito.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── COMO FUNCIONA ── -->
+<section class="steps" id="como-funciona">
+  <div class="section-label reveal">Como funciona</div>
+  <h2 class="section-title reveal" style="margin: 0 auto; text-align: center;">Pronto em <em>3 minutos</em></h2>
+
+  <div class="steps-list reveal">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Baixe e crie a família</h3>
+      <p>Instale o app, crie sua conta e convide sua pessoa com um código de 8 caracteres.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Conecte seus bancos</h3>
+      <p>Autorize o Open Finance e veja os extratos de vocês dois aparecerem automaticamente.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Defina as metas</h3>
+      <p>Criem as metas do casal, configurem o orçamento por categoria e deixem o app trabalhar.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h3>Acompanhem juntos</h3>
+      <p>Tudo em tempo real, offline ou online. Qualquer gasto lançado por um aparece para os dois.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── LEAD CAPTURE ── -->
+<section class="capture" id="early-access">
+  <div class="section-label reveal">Acesso antecipado</div>
+  <h2 class="reveal">Seja o primeiro a <em>experimentar</em></h2>
+  <p class="reveal">
+    O app está em desenvolvimento final. Deixe seu e-mail e entraremos em contato
+    assim que o acesso beta estiver disponível.
+  </p>
+
+  <div class="capture-form reveal" id="form-wrap">
+    <input type="text"  id="lead-name"  placeholder="Seu nome" autocomplete="name" required />
+    <input type="email" id="lead-email" placeholder="Seu melhor e-mail" autocomplete="email" required />
+    <button type="button" onclick="handleSubmit()">
+      Quero acesso antecipado
+    </button>
+  </div>
+
+  <p class="capture-disclaimer reveal">
+    Sem spam. Sem cartão de crédito. Apenas novidades do 4U2 Finance.
+  </p>
+
+  <div class="success-msg" id="success-msg">
+    <span style="color: var(--green)">✓</span>
+    Recebemos seu contato! Te avisamos em breve.
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <a href="#" class="footer-logo">
+    <span>$</span><span>2</span> Finance
+  </a>
+  <p>© 2026 4U2 Finance · 4U &amp; 4ALL · Feito com ♥ no Brasil</p>
+</footer>
+
+<script>
+  // ── Scroll reveal ──
+  const reveals = document.querySelectorAll('.reveal')
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible')
+        io.unobserve(e.target)
+      }
+    })
+  }, { threshold: 0.12 })
+  reveals.forEach((el) => io.observe(el))
+
+  // ── Lead form ──
+  function handleSubmit() {
+    const name  = document.getElementById('lead-name').value.trim()
+    const email = document.getElementById('lead-email').value.trim()
+
+    if (!name || !email || !email.includes('@')) {
+      document.getElementById('lead-email').style.borderColor = 'rgba(249,168,212,0.5)'
+      setTimeout(() => {
+        document.getElementById('lead-email').style.borderColor = ''
+      }, 1500)
+      return
+    }
+
+    // Aqui você integra com Netlify Forms, ConvertKit, Mailchimp, etc.
+    // Para Netlify Forms: adicionar name="lead" e netlify ao <form>
+    // e fazer fetch para o endpoint de form da Netlify.
+    console.log('Lead:', { name, email })
+
+    document.getElementById('form-wrap').style.display = 'none'
+    document.querySelector('.capture-disclaimer').style.display = 'none'
+    const msg = document.getElementById('success-msg')
+    msg.style.display = 'flex'
+    msg.style.animation = 'fadeUp 0.5s ease'
+  }
+
+  // Enter key no form
+  document.getElementById('lead-email').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') handleSubmit()
+  })
+</script>
+</body>
+</html>
