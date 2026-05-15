@@ -11,6 +11,8 @@ export interface FeatureCard {
   iconVariant: 'green' | 'pink'
   title: string
   description: string
+  /** Feature ainda não disponível no app — exibe badge "Em breve" */
+  isFuture?: boolean
 }
 
 export interface Step {
@@ -47,11 +49,38 @@ export interface CategoryBudget {
   fillColorClass: string
 }
 
+// ─── Registration flow (3 steps: form → otp → success) ────────────────────────
+
+export type RegisterStep = 'form' | 'otp' | 'success'
+
+export interface RegisterFormData {
+  name: string
+  phone: string
+  email: string
+}
+
+export interface RegisterFormState {
+  data: RegisterFormData
+  step: RegisterStep
+  termsAccepted: boolean
+  privacyAccepted: boolean
+  fieldErrors: Partial<Record<keyof RegisterFormData, string>>
+  apiError: string | null
+  isLoading: boolean
+  /** OTP digits (max 6) — only used in the otp step */
+  otp: string
+  otpError: string | null
+  /** Seconds remaining before user can resend OTP */
+  cooldown: number
+}
+
+/** @deprecated Use RegisterFormData instead */
 export interface LeadFormData {
   name: string
   email: string
 }
 
+/** @deprecated Use RegisterFormState instead */
 export interface LeadFormState {
   data: LeadFormData
   isSubmitted: boolean

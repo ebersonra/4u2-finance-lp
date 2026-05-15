@@ -23,8 +23,22 @@ export default function FeaturesGrid() {
         {features.map((feature) => (
           <div
             key={feature.id}
-            className="bg-bg-secondary p-10 transition-colors duration-300 hover:bg-bg-tertiary"
+            className="bg-bg-secondary p-10 transition-colors duration-300 hover:bg-bg-tertiary relative"
           >
+            {/* Badge "Em breve" para features não implementadas */}
+            {feature.isFuture && (
+              <span
+                className="absolute top-4 right-4 inline-flex items-center gap-1 text-[0.6rem]
+                  font-semibold tracking-widest uppercase px-2.5 py-1 rounded-pill
+                  border border-[rgba(245,158,11,0.35)] text-[#F59E0B]"
+                style={{ background: 'rgba(245,158,11,0.08)' }}
+                aria-label="Funcionalidade prevista para versão futura"
+              >
+                <span className="w-1 h-1 rounded-full bg-[#F59E0B] inline-block" aria-hidden="true" />
+                Em breve
+              </span>
+            )}
+
             <div
               className={`w-12 h-12 rounded-xl flex items-center justify-center mb-5 ${
                 feature.iconVariant === 'green'
@@ -35,7 +49,7 @@ export default function FeaturesGrid() {
               <feature.Icon size={24} aria-hidden="true" />
             </div>
 
-            <h3 className="font-heading text-xl font-semibold mb-2.5 tracking-tight">
+            <h3 className="font-heading text-xl font-semibold mb-2.5 tracking-tight flex items-center gap-2">
               {feature.title}
             </h3>
 

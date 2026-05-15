@@ -15,6 +15,15 @@ export default function HeroSection() {
         }}
         aria-hidden="true"
       />
+      {/* Secondary pink glow — matches the dual-member palette */}
+      <div
+        className="absolute top-1/3 left-1/3 w-[400px] h-[400px] pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse, rgba(249,168,212,0.05) 0%, transparent 70%)',
+        }}
+        aria-hidden="true"
+      />
 
       {/* Status badge */}
       <span
@@ -29,15 +38,32 @@ export default function HeroSection() {
         Em breve · iOS &amp; Android
       </span>
 
-      {/* Logo mark */}
+      {/* Logo mark — actual app icon */}
       <div
-        className="font-heading font-bold leading-none my-10 animate-fade-up relative inline-block select-none"
-        style={{ fontSize: 'clamp(5rem, 15vw, 10rem)' }}
-        aria-label="4U2 Finance"
+        className="animate-fade-up relative inline-block select-none mb-4"
+        style={{ animationDelay: '0.05s' }}
       >
-        <span className="text-brand-green">$</span>
-        <span className="text-members-ana">2</span>
+        <img
+          src="/logo.png"
+          alt="4U2 Finance"
+          className="w-32 h-32 rounded-[2.5rem] mx-auto"
+          style={{
+            boxShadow:
+              '0 0 0 1px rgba(110,231,183,0.2), 0 32px 64px rgba(0,0,0,0.5), 0 0 80px rgba(110,231,183,0.12)',
+          }}
+          width={128}
+          height={128}
+        />
       </div>
+
+      {/* Tagline — mirrors splash screen "ORGANIZE · UNITE" */}
+      <p
+        className="font-heading text-xs font-semibold tracking-[0.3em] uppercase
+          text-brand-green mb-8 animate-fade-up"
+        style={{ animationDelay: '0.08s' }}
+      >
+        ORGANIZE · UNITE
+      </p>
 
       {/* Headline */}
       <h1
@@ -64,7 +90,7 @@ export default function HeroSection() {
 
       {/* CTA buttons */}
       <div
-        className="flex items-center gap-4 mt-6 flex-wrap justify-center
+        className="flex items-center gap-4 mt-8 flex-wrap justify-center
           animate-[fadeUp_0.6s_0.3s_ease_both]"
       >
         <a

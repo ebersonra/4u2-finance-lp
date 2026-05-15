@@ -17,10 +17,16 @@ export default function AppPreview() {
           <em className="not-italic text-members-ana">numa tela só</em>
         </h2>
 
-        <p className="text-sm font-light text-content-secondary leading-loose mb-8">
+        <p className="text-sm font-light text-content-secondary leading-loose mb-6">
           Veja o saldo consolidado do casal, os gastos por categoria, as metas que vocês
           estão construindo juntos — e os boletos que vencem essa semana, tudo puxado
           automaticamente pelo Open Finance.
+        </p>
+
+        {/* Hint to interact with the mockup */}
+        <p className="text-xs font-medium text-brand-green mb-8 flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-brand-green inline-block" aria-hidden="true" />
+          Toque nas abas do mockup para ver Orçamento e Metas
         </p>
 
         <a

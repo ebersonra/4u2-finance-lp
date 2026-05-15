@@ -8,16 +8,25 @@ export default function Footer() {
     >
       <a
         href="#"
-        className="font-heading text-lg font-bold text-content-primary no-underline"
+        className="flex items-center gap-2.5 no-underline"
         aria-label="4U2 Finance — ir para o início da página"
       >
-        <span className="text-brand-green">$</span>
-        <span className="text-members-ana">2</span>
-        {' '}Finance
+        <img
+          src="/logo.png"
+          alt="4U2 Finance"
+          className="w-7 h-7 rounded-lg"
+          width={28}
+          height={28}
+        />
+        <span className="font-heading text-base font-bold text-content-primary">
+          <span className="text-brand-green">4U</span>
+          <span className="text-members-ana">2</span>
+          {' '}Finance
+        </span>
       </a>
 
       <p className="text-sm font-light text-content-secondary inline-flex items-center gap-1">
-        © 2026 4U2 Finance · 4U &amp; 4ALL · Feito com
+        © 2026 4U2 Finance · Organize &amp; Unite · Feito com
         <IoHeart size={14} style={{ color: '#F9A8D4' }} aria-hidden="true" />
         no Brasil
       </p>

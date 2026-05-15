@@ -20,6 +20,7 @@ export const features: FeatureCard[] = [
     title: 'Open Finance',
     description:
       'Conecte as contas bancárias de vocês dois. Extratos, saldos e boletos atualizados automaticamente — sem digitar nada.',
+    isFuture: true,
   },
   {
     id: 'goals',
@@ -43,7 +44,7 @@ export const features: FeatureCard[] = [
     iconVariant: 'pink',
     title: 'Lançamento pelo WhatsApp',
     description:
-      'Mande "gastei 45 no uber" para o bot e pronto — o lançamento já entra no app. Sem abrir nada, onde estiver.',
+      'Mande "gastei 45 no uber" ou foto do comprovante para o bot — o lançamento já entra no app com categoria e valor extraídos automaticamente.',
   },
   {
     id: 'offline',
@@ -104,16 +105,16 @@ export const socialItems: SocialItem[] = [
 export const mockTransactions: TransactionItem[] = [
   {
     id: 'tx1',
-    name: 'iFood',
+    name: 'Mercado',
     category: 'Alimentação',
-    member: 'EB',
-    amount: 68,
+    member: 'TM',
+    amount: 210,
     type: 'expense',
   },
   {
     id: 'tx2',
     name: 'Salário',
-    category: 'Receita',
+    category: 'Renda',
     member: 'AN',
     amount: 4800,
     type: 'income',
@@ -122,8 +123,16 @@ export const mockTransactions: TransactionItem[] = [
     id: 'tx3',
     name: 'Uber',
     category: 'Transporte',
-    member: 'EB',
+    member: 'TM',
     amount: 24,
+    type: 'expense',
+  },
+  {
+    id: 'tx4',
+    name: 'iFood',
+    category: 'Delivery',
+    member: 'AN',
+    amount: 58,
     type: 'expense',
   },
 ]

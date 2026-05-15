@@ -43,6 +43,13 @@ export default {
           health: '#10B981',
           leisure: '#F59E0B',
           education: '#EC4899',
+          income: '#34D399',
+          restaurant: '#EF4444',
+          market: '#6366F1',
+          personal: '#F43F5E',
+          delivery: '#A855F7',
+          streaming: '#EC4899',
+          other: '#94A3B8',
         },
       },
       fontFamily: {
